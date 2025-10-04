@@ -57,6 +57,11 @@
     </Link>
     <PostBuildEvent />
     <PostBuildEvent />
+    <PostBuildEvent>
+      <Command>xcopy "$(TargetPath)" "D:\Games\FIFA 11\Game\plugins\" /Y /I
+xcopy "$(TargetPath)" "D:\Games\FIFA 12\Game\plugins\" /Y /I
+xcopy "$(TargetPath)" "D:\Games\FIFA 12 - UEFA EURO 2012\Game\plugins\" /Y /I</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />

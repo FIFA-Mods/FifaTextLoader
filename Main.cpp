@@ -75,6 +75,17 @@ int METHOD LocalizationInterface_GetString(void *t, DUMMY_ARG, void *pDstStringU
     return CallMethodAndReturnDynGlobal<int>(gGetString, t, pDstStringUTF8, uKey, eCase);
 }
 
+int METHOD LocalizationInterface_GetString_12(void *t, DUMMY_ARG, void *pDstStringUTF8, unsigned int uKey, unsigned int eCase) {
+    auto it = GetTranslationEntries().find(uKey);
+    if (it != GetTranslationEntries().end()) {
+        char const *newStr = (*it).second.c_str();
+        CallMethodDynGlobal(gStringAssign, pDstStringUTF8, newStr, newStr + strlen(newStr));
+        CallMethodDynGlobal(gEnforceCase, t, pDstStringUTF8, eCase);
+        return 1;
+    }
+    return CallMethodAndReturnDynGlobal<int>(gGetString, t, pDstStringUTF8, uKey, eCase);
+}
+
 class FifaTextLoader {
 public:
     FifaTextLoader() {
@@ -95,6 +106,36 @@ public:
             gStringAssign = 0x48E480;
             gEnforceCase = 0x1B9EAF0;
             gGetHash = 0x47F3D0;
+            break;
+        case ID_FIFA12_1700:
+            gGetString = patch::RedirectCall(0x112C11D, LocalizationInterface_GetString_12);
+            gSetLanguage = patch::RedirectCall(0x10B78A1, LocalizationInterface_SetLanguage);
+            gStringAssign = 0x42F820;
+            gEnforceCase = 0x112BC20;
+            gGetHash = 0x428450;
+            break;
+        case ID_FIFA12_1500_SKD:
+            gGetString = patch::RedirectCall(0x112B03D, LocalizationInterface_GetString_12);
+            gSetLanguage = patch::RedirectCall(0x10B66A1, LocalizationInterface_SetLanguage);
+            gStringAssign = 0x42F720;
+            gEnforceCase = 0x112AB40;
+            gGetHash = 0x428350;
+            break;
+        case ID_FIFA12_1000_RLD:
+            gGetString = patch::RedirectCall(0xF7436D, LocalizationInterface_GetString_12);
+            gSetLanguage = patch::RedirectCall(0xE97FA1, LocalizationInterface_SetLanguage);
+            gStringAssign = 0x42E730;
+            gEnforceCase = 0xF73E70;
+            gGetHash = 0x427380;
+            break;
+        case ID_FIFA11_1010_RLD:
+        case ID_FIFA11_1010:
+            gGetString = patch::RedirectJump(0x468BB7, LocalizationInterface_GetString);
+            gSetLanguage = patch::RedirectCall(0x466629, LocalizationInterface_SetLanguage);
+            patch::RedirectCall(0x4663D6, LocalizationInterface_SetLanguage);
+            gStringAssign = 0x454410;
+            gEnforceCase = 0x4274B0;
+            gGetHash = 0x41CFE0;
             break;
         }
     }
