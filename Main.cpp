@@ -93,6 +93,20 @@ public:
             return;
         auto v = FIFA::GetAppVersion();
         switch (v.id()) {
+        case ID_FIFA14_1700:
+            gGetString = patch::RedirectCall(0x25A2CBD, LocalizationInterface_GetString);
+            gSetLanguage = patch::SetPointer(0x3D65770, LocalizationInterface_SetLanguage);
+            gStringAssign = 0x49F0E0;
+            gEnforceCase = 0x25A2460;
+            gGetHash = 0x490020;
+            break;
+        case ID_FIFA14_1400_3DM:
+            gGetString = patch::RedirectCall(0x259F4BD, LocalizationInterface_GetString);
+            gSetLanguage = patch::SetPointer(0x3D10630, LocalizationInterface_SetLanguage);
+            gStringAssign = 0x49EFB0;
+            gEnforceCase = 0x259EC60;
+            gGetHash = 0x48FEE0;
+            break;
         case ID_FIFA13_1700_RLD:
             gGetString = patch::RedirectCall(0x1BA3B9D, LocalizationInterface_GetString);
             gSetLanguage = patch::RedirectCall(0x60D972, LocalizationInterface_SetLanguage);
@@ -128,7 +142,7 @@ public:
             gEnforceCase = 0xF73E70;
             gGetHash = 0x427380;
             break;
-        case ID_FIFA11_1010_RLD:
+        case ID_FIFA11_1010_FLT:
         case ID_FIFA11_1010:
             gGetString = patch::RedirectJump(0x468BB7, LocalizationInterface_GetString);
             gSetLanguage = patch::RedirectCall(0x466629, LocalizationInterface_SetLanguage);

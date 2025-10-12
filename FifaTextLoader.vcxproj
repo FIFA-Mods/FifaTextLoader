@@ -31,7 +31,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <TargetExt>.asi</TargetExt>
-    <OutDir>D:\Games\FIFA 13\Game\plugins\</OutDir>
+    <OutDir>D:\Games\FIFA 14\Game\plugins\</OutDir>
     <IncludePath>$(IncludePath)</IncludePath>
     <TargetName>TextLoader</TargetName>
   </PropertyGroup>
@@ -58,9 +58,24 @@
     <PostBuildEvent />
     <PostBuildEvent />
     <PostBuildEvent>
-      <Command>xcopy "$(TargetPath)" "D:\Games\FIFA 11\Game\plugins\" /Y /I
-xcopy "$(TargetPath)" "D:\Games\FIFA 12\Game\plugins\" /Y /I
-xcopy "$(TargetPath)" "D:\Games\FIFA 12 - UEFA EURO 2012\Game\plugins\" /Y /I</Command>
+      <Command>if exist "D:\Games\FIFA 13\" (
+    xcopy "$(TargetPath)" "D:\Games\FIFA 13\plugins\" /Y /I
+)
+if exist "D:\Games\FIFA 12\" (
+    xcopy "$(TargetPath)" "D:\Games\FIFA 12\plugins\" /Y /I
+)
+if exist "D:\Games\FIFA 12 - UEFA EURO 2012\" (
+    xcopy "$(TargetPath)" "D:\Games\FIFA 12 - UEFA EURO 2012\plugins\" /Y /I
+)
+if exist "D:\Games\UEFA EURO 2012\" (
+    xcopy "$(TargetPath)" "D:\Games\UEFA EURO 2012\plugins\" /Y /I
+)
+if exist "D:\Games\EURO 2012\" (
+    xcopy "$(TargetPath)" "D:\Games\EURO 2012\plugins\" /Y /I
+)
+if exist "D:\Games\FIFA 11\" (
+    xcopy "$(TargetPath)" "D:\Games\FIFA 11\plugins\" /Y /I
+)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
